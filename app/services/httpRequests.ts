@@ -1,13 +1,20 @@
 import { z, ZodObject } from "zod";
 
-export async function getData(url: string): Promise<any> {
-  const data = await fetch(url);
-  return await data.json();
+class HTTP {
+  constructor() {}
+
+  async GET(url: string): Promise<any> {
+    const data = await fetch(url);
+    return await data.json();
+  }
+
+  // Might not need the schema parameter
+  async PUT(url: string, schema: any) {}
+  async POST(url: string, schema: any) {}
+
+  async DELETE(url: string) {}
 }
 
-// PUT and POST requests should take the endpoint and
-// a validation schema as parameters
-export async function addData(url: string, schema: any) {}
-export async function updateData(url: string, schema: any) {}
+const http = new HTTP();
 
-export async function deleteData(url: string) {}
+export default http;

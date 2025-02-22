@@ -1,5 +1,5 @@
 import React from "react";
-import { getData } from "@/app/services/httpRequests";
+import http from "@/app/services/httpRequests";
 import { User } from "@/app/services/interfaces";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const UserProfilePage = async ({ params: { id } }: Props) => {
-  const user: User = await getData(`http://localhost:3001/api/users/${id}`);
+  const user: User = await http.GET(`http://localhost:3000/api/users/${id}`);
   return (
     <>
       <div>User {id} Profile Page</div>
