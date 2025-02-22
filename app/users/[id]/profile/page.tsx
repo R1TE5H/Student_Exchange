@@ -1,16 +1,17 @@
-import { getData } from "@/app/services/httpRequests";
 import React from "react";
+import { getData } from "@/app/services/httpRequests";
+import { User } from "@/app/services/interfaces";
 
 interface Props {
   params: { id: string };
 }
 
 const UserProfilePage = async ({ params: { id } }: Props) => {
-  const user = await getData(`http://localhost:3001/api/users/${id}/profile`);
+  const user: User = await getData(`http://localhost:3001/api/users/${id}`);
   return (
     <>
       <div>User {id} Profile Page</div>
-      <div>{user}</div>
+      <div>{user.name}</div>
     </>
   );
 };

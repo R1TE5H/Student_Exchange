@@ -5,5 +5,7 @@ interface Props {
 }
 
 export async function GET(request: NextRequest, { params: { id } }: Props) {
-  return NextResponse.json(`GET Request from api/users/${id}`, { status: 200 });
+  const user = { id: id, name: "Ritesh" };
+
+  return NextResponse.json(user, { status: 200 });
 }

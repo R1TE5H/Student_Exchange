@@ -1,23 +1,14 @@
 import React from "react";
-import { getData } from "../services/httpRequests";
 
 interface Props {
   searchParams: { filter: string };
 }
 
-const ProductsDashboardPage = async ({ searchParams: { filter } }: Props) => {
-  const products = await getData("https://jsonplaceholder.typicode.com/users");
-
+const ProductsDashboardPage = ({ searchParams: { filter } }: Props) => {
   return (
-    <>
-      <div>
-        {filter ? (
-          <p>The Search Param is {filter}</p>
-        ) : (
-          <p>Product Dash Board</p>
-        )}
-      </div>
-    </>
+    <div>
+      {filter ? <p>The Search Param is {filter}</p> : <p>Product Dash Board</p>}
+    </div>
   );
 };
 
