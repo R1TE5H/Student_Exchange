@@ -6,7 +6,9 @@ interface Props {
 }
 
 export async function GET(request: NextRequest, { params: { id } }: Props) {
-  const user = { id: id, name: "Ritesh" };
+  const user = await prisma.user.findUnique({
+    where: { id: id },
+  });
 
   return NextResponse.json(user, { status: 200 });
 }
