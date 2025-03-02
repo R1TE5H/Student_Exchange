@@ -14,14 +14,12 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-
 // Update Interfaces as Models change
-// Change id from autoincrement to cuid when there is more implementation
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @unique
   name      String
-  email     String
+  email     String   @unique
   createdAt DateTime @default(now())
 }
 

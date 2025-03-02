@@ -1,5 +1,4 @@
 import React from "react";
-import http from "../services/httpRequests";
 import { Product } from "../services/interfaces";
 
 interface Props {
@@ -7,19 +6,33 @@ interface Props {
 }
 
 const ProductsDashboardPage = async ({ searchParams: { filter } }: Props) => {
-  const data: Product[] = await http.GET("http://localhost:3000/api/products");
+  const data = await fetch("http://localhost:3000/api/products");
+  const products: Product[] = await data.json();
 
   return (
     <>
       {filter ? <p>The Search Param is {filter}</p> : <p>Product Dash Board</p>}
-      <div>
-        {data.map((product) => (
-          <div key={product.id}>
-            {product.name}, ${product.price},{" "}
-            {product.createdAt.toLocaleString()}
-          </div>
-        ))}
-      </div>
+
+      {products && (
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id}>
+                <th>{product.id}</th>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 };

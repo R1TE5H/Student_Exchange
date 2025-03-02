@@ -1,4 +1,4 @@
-import http from "@/app/services/httpRequests";
+import { Product } from "@/app/services/interfaces";
 import React from "react";
 
 interface Props {
@@ -6,13 +6,14 @@ interface Props {
 }
 
 const IndividualProductPage = async ({ params: { id } }: Props) => {
-  const data = await http.GET(`http://localhost:3000/api/products/${id}`);
+  const data = await fetch(`http://localhost:3000/api/products/${id}`);
+  const product: Product = await data.json();
 
   return (
     <>
       <div>Product Number {id} Page</div>
       <div>
-        {data.name}, {data.id}
+        {product.name}, {product.id}
       </div>
     </>
   );
