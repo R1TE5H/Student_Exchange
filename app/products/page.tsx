@@ -6,7 +6,7 @@ interface Props {
 }
 
 const ProductsDashboardPage = async ({ searchParams: { filter } }: Props) => {
-  const data = await fetch("http://localhost:3000/api/products");
+  const data = await fetch(`${process.env.BASE_DOMAIN}/api/products`);
   const products: Product[] = await data.json();
 
   return (
