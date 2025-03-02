@@ -6,7 +6,7 @@ interface Props {
 }
 
 const UserPage = async ({ params: { id } }: Props) => {
-  const data = await fetch("http://localhost:3000/api/products");
+  const data = await fetch(`http://localhost:3000/api/users/${id}`);
   const user: User = await data.json();
 
   return (
