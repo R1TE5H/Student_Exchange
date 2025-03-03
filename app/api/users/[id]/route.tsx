@@ -5,12 +5,20 @@ interface Props {
   params: { id: string };
 }
 
-export async function GET(request: NextRequest, { params: { id } }: Props) {
-  const user = await prisma.user.findUnique({
-    where: { id: id },
-  });
-  if (!user)
-    return NextResponse.json({ error: "Could not find user" }, { status: 404 });
+export async function GET(request: NextRequest, { params }: Props) {
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
 
-  return NextResponse.json(user, { status: 200 });
+  try {
+    const users = await prisma.user.findUnique({
+      where: { id: id },
+    });
+    return NextResponse.json(users, { status: 200 });
+  } catch (error) {
+    console.error("Prisma Query Error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch users" },
+      { status: 500 }
+    );
+  }
 }

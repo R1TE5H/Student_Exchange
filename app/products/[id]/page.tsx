@@ -5,8 +5,13 @@ interface Props {
   params: { id: string };
 }
 
-const IndividualProductPage = async ({ params: { id } }: Props) => {
-  const data = await fetch(`${process.env.BASE_DOMAIN}/api/products/${id}`);
+const IndividualProductPage = async ({ params }: Props) => {
+  const resolvedParams = await params;
+  const { id } = await resolvedParams;
+
+  const data = await fetch(`${process.env.BASE_DOMAIN}/api/products/${id}`, {
+    method: "GET",
+  });
   const product: Product = await data.json();
 
   return (

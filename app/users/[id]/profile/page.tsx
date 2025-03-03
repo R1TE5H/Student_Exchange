@@ -5,9 +5,15 @@ interface Props {
   params: { id: string };
 }
 
-const UserProfilePage = async ({ params: { id } }: Props) => {
-  const data = await fetch(`${process.env.BASE_DOMAIN}/api/users/${id}`);
+const UserProfilePage = async ({ params }: Props) => {
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
+
+  const data = await fetch(`${process.env.BASE_DOMAIN}/api/users/${id}`, {
+    method: "GET",
+  });
   const user: User = await data.json();
+
   return (
     <>
       <p>Profile Page</p>

@@ -1,12 +1,18 @@
 import React from "react";
 import { User } from "@/app/services/interfaces";
+import { logOut } from "@/app/logout/actions";
 
 interface Props {
   params: { id: string };
 }
 
-const UserPage = async ({ params: { id } }: Props) => {
-  const data = await fetch(`${process.env.BASE_DOMAIN}/api/users/${id}`);
+const UserPage = async ({ params }: Props) => {
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
+
+  const data = await fetch(`${process.env.BASE_DOMAIN}/api/users/${id}`, {
+    method: "GET",
+  });
   const user: User = await data.json();
 
   return (
@@ -27,6 +33,9 @@ const UserPage = async ({ params: { id } }: Props) => {
           </tr>
         </tbody>
       </table>
+      <form>
+        <button formAction={logOut}>Log Out</button>
+      </form>
     </>
   );
 };

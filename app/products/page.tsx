@@ -5,8 +5,13 @@ interface Props {
   searchParams: { filter: string };
 }
 
-const ProductsDashboardPage = async ({ searchParams: { filter } }: Props) => {
-  const data = await fetch(`${process.env.BASE_DOMAIN}/api/products`);
+const ProductsDashboardPage = async ({ searchParams }: Props) => {
+  const resolvedSearchParams = await searchParams;
+  const { filter } = resolvedSearchParams;
+
+  const data = await fetch(`${process.env.BASE_DOMAIN}/api/products`, {
+    method: "GET",
+  });
   const products: Product[] = await data.json();
 
   return (
