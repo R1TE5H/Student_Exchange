@@ -1,6 +1,5 @@
 import React from "react";
 import { User } from "@/app/services/interfaces";
-import { logOut } from "@/app/logout/actions";
 
 interface Props {
   params: { id: string };
@@ -33,9 +32,6 @@ const UserPage = async ({ params }: Props) => {
           </tr>
         </tbody>
       </table>
-      <form>
-        <button formAction={logOut}>Log Out</button>
-      </form>
     </>
   );
 };

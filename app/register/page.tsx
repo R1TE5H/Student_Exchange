@@ -1,7 +1,20 @@
-import { login } from "./actions";
+import { signup } from "./actions";
+import React from "react";
 
 export default function LoginPage() {
   const fields = [
+    {
+      id: "first_name",
+      name: "first_name",
+      type: "text",
+      label: "First Name",
+    },
+    {
+      id: "last_name",
+      name: "last_name",
+      type: "text",
+      label: "Last Name",
+    },
     {
       id: "email",
       name: "email",
@@ -26,8 +39,8 @@ export default function LoginPage() {
           </div>
         ))}
       </div>
-      <button className="button" formAction={login}>
-        Log in
+      <button className="button" formAction={signup}>
+        Sign up
       </button>
     </form>
   );

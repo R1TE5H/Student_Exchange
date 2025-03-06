@@ -19,3 +19,15 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer base {
+  label {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  .button {
+    @apply bg-purple-600 text-white p-4 rounded-md text-xl hover:bg-purple-700;
+  }
+}
