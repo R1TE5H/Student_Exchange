@@ -1,5 +1,8 @@
 import { signup } from "./actions";
 import React from "react";
+import schema from "./schema";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default function LoginPage() {
   const fields = [
@@ -27,12 +30,30 @@ export default function LoginPage() {
       type: "password",
       label: "Password",
     },
+    {
+      id: "confirm_password",
+      name: "confirm_password",
+      type: "password",
+      label: "Confirm Password",
+    },
   ];
 
   const handleSubmit = async (data: FormData) => {
     "use server";
-    console.log("Add validation before sending it to the signup method");
-    signup(data);
+
+    const formData = Object.fromEntries(data.entries());
+    const validate = schema.safeParse(formData);
+
+    if (validate.success) {
+      const confirmation = await signup(data);
+      if (confirmation.success) {
+        revalidatePath("/", "layout");
+        redirect(`/`);
+      } else {
+        console.log(confirmation.error);
+      }
+    }
+    validate.error?.errors.forEach((e) => console.log(e.message));
   };
 
   return (
@@ -45,13 +66,7 @@ export default function LoginPage() {
           </div>
         ))}
       </div>
-      <button
-        className="button"
-        formAction={
-          // signup
-          handleSubmit
-        }
-      >
+      <button className="button" formAction={handleSubmit}>
         Sign up
       </button>
     </form>

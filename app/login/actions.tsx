@@ -1,11 +1,17 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import { prisma } from "@/prisma/client";
+import schema from "./schema";
 
 export async function login(formData: FormData) {
+  const validation_data = Object.fromEntries(formData.entries());
+  const validate = schema.safeParse(validation_data);
+
+  if (!validate.success)
+    return {
+      error: `The provided data is invalid. Try again with the correct data`,
+    };
+
   const supabase = await createClient();
 
   const data = {
@@ -18,10 +24,7 @@ export async function login(formData: FormData) {
     error,
   } = await supabase.auth.signInWithPassword(data);
 
-  if (error) {
-    redirect("/error");
-  }
+  if (error) return { error: `There was an error: ${error.message}` };
 
-  revalidatePath("/", "layout");
-  redirect(`/users/${user?.id}`);
+  if (user) return { success: "User successfully logged in", userID: user.id };
 }
