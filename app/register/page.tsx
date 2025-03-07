@@ -29,6 +29,12 @@ export default function LoginPage() {
     },
   ];
 
+  const handleSubmit = async (data: FormData) => {
+    "use server";
+    console.log("Add validation before sending it to the signup method");
+    signup(data);
+  };
+
   return (
     <form>
       <div className="flex mb-5">
@@ -39,7 +45,13 @@ export default function LoginPage() {
           </div>
         ))}
       </div>
-      <button className="button" formAction={signup}>
+      <button
+        className="button"
+        formAction={
+          // signup
+          handleSubmit
+        }
+      >
         Sign up
       </button>
     </form>
