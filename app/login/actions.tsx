@@ -7,10 +7,18 @@ export async function login(formData: FormData) {
   const validation_data = Object.fromEntries(formData.entries());
   const validate = schema.safeParse(validation_data);
 
-  if (!validate.success)
+  if (!validate.success) {
+    const errors: Record<string, string> = {};
+
+    validate.error.errors.forEach((err) => {
+      errors[err.path.join(".")] = err.message;
+    });
+
     return {
-      error: `The provided data is invalid. Try again with the correct data`,
+      success: false,
+      errors,
     };
+  }
 
   const supabase = await createClient();
 
@@ -21,10 +29,20 @@ export async function login(formData: FormData) {
 
   const {
     data: { user },
-    error,
+    error: supabaseError,
   } = await supabase.auth.signInWithPassword(data);
 
-  if (error) return { error: `There was an error: ${error.message}` };
-
-  if (user) return { success: "User successfully logged in", userID: user.id };
+  if (supabaseError) {
+    return {
+      success: false,
+      error: `Signup failed: ${supabaseError.message}`,
+    };
+  }
+  if (user)
+    return {
+      success: true,
+      message: "User successfully created",
+      userID: user.id,
+    };
+  return { success: false, error: "Unexpected error occurred." };
 }

@@ -5,16 +5,23 @@ import { prisma } from "@/prisma/client";
 import schema from "./schema";
 
 export async function signup(formData: FormData) {
-  // Validate first because if there is an issue we do not want to waste processor time
   const validation_data = Object.fromEntries(formData.entries());
   const validate = schema.safeParse(validation_data);
 
-  if (!validate.success)
-    return {
-      error: `The provided data is invalid. Try again with the correct data`,
-    };
+  if (!validate.success) {
+    const errors: Record<string, string> = {};
 
-  // If good, then start process
+    validate.error.errors.forEach((err) => {
+      errors[err.path.join(".")] = err.message;
+    });
+
+    return {
+      success: false,
+      errors,
+    };
+  }
+
+  // If good, then start sign up process
 
   const supabase = await createClient();
 
@@ -27,11 +34,14 @@ export async function signup(formData: FormData) {
 
   const {
     data: { user },
-    error,
+    error: supabaseError,
   } = await supabase.auth.signUp(data);
 
-  if (error) {
-    return { error: `There was an error: ${error.code} - ${error.message}` };
+  if (supabaseError) {
+    return {
+      success: false,
+      error: `Signup failed: ${supabaseError.message}`,
+    };
   }
 
   if (user) {
@@ -44,11 +54,20 @@ export async function signup(formData: FormData) {
           email: user.email!,
         },
       });
-      return { success: "User successfully created" };
-    } catch (error: any) {
-      console.log(`There was a DB error: ${error}`);
-      return { error: `There was an error uploading the user to the DB` };
+
+      return {
+        success: true,
+        message: "User successfully created",
+        userID: user.id,
+      };
+    } catch (dbError: any) {
+      console.error(`Database Error: ${dbError.message}`);
+      return {
+        success: false,
+        error: "An error occurred while saving user data.",
+      };
     }
   }
-  return { error: "An unexpected error has occurred." };
+
+  return { success: false, error: "Unexpected error occurred." };
 }
