@@ -2,6 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { User } from "@/app/services/interfaces";
+import Link from "next/link";
 
 interface Props {
   params: { id: string };
@@ -46,6 +47,9 @@ const UserPage = async ({ params }: Props) => {
           </tr>
         </tbody>
       </table>
+      <Link className="button" href={`/users/${id}/create-product`}>
+        Create Product Page
+      </Link>
     </>
   );
 };

@@ -1,8 +1,13 @@
 import Link from "next/link";
 import React from "react";
 import { logOut } from "./logout/actions";
+import { createClient } from "@/utils/supabase/server";
 
 const NavBar = async () => {
+  const supabase = await createClient();
+
+  const { data } = await supabase.auth.getUser();
+
   const links = [
     {
       url: "/login",
@@ -27,15 +32,21 @@ const NavBar = async () => {
             {link.label}
           </Link>
         ))}
-
-        <form>
-          <button
-            className="text-xl bg-purple-600 text-white p-4 rounded-md"
-            formAction={logOut}
-          >
-            Log Out
-          </button>
-        </form>
+        {data.user && (
+          <Link className="button" href={`/users/${data.user.id}`}>
+            Users Page
+          </Link>
+        )}
+        {data.user && (
+          <form>
+            <button
+              className="text-xl bg-purple-600 text-white p-4 rounded-md"
+              formAction={logOut}
+            >
+              Log Out
+            </button>
+          </form>
+        )}
       </div>
       <div className="invisible" />
     </nav>
