@@ -11,7 +11,7 @@ const NavBar = async () => {
   return (
     <nav className="flex justify-around text-xl text-white">
       <div className="invisible" />
-      <div className="p-5 flex justify-between bg-red-300">
+      <div className="p-5 flex justify-between gap-5 bg-red-300">
         {!data.user && (
           <>
             <Link className="button" href={`/login`}>
