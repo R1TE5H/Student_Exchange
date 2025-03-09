@@ -12,6 +12,16 @@ export async function GET(request: NextRequest, { params }: Props) {
   try {
     const product = await prisma.product.findUnique({
       where: { id: parseInt(id) },
+      include: {
+        creator: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            // ratings: true
+          },
+        },
+      },
     });
     if (!product)
       return NextResponse.json({ error: "No Product Found" }, { status: 404 });

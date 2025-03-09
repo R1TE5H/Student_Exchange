@@ -18,6 +18,7 @@ const schema = z.object({
     .multipleOf(0.01, {
       message: "Price must have at most 2 decimal places",
     }),
+  userID: z.string().min(10),
   description: z
     .string()
     .min(10, { message: "Description must be longer than 10 characters" }),

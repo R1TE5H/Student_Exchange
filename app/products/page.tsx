@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { sort } from "fast-sort";
-import { Product } from "../services/interfaces";
+import { Product } from "../../prisma/interfaces";
 
 interface Props {
   searchParams: { sortOrder: string };
@@ -40,14 +40,22 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
               <th>ID</th>
               <th>Name</th>
               <th>Price</th>
+              <th>Creator Name</th>
+              <th>Creator Email</th>
             </tr>
           </thead>
           <tbody>
             {(filteredProducts || products).map((product) => (
               <tr key={product.id}>
                 <th>{product.id}</th>
-                <td>{product.name}</td>
+                <td>
+                  <Link href={`/products/${product.id}`}>{product.name}</Link>
+                </td>
                 <td>{product.price}</td>
+                <td>
+                  {product.creator.firstName} {product.creator.lastName}
+                </td>
+                <td>{product.creator.email}</td>
               </tr>
             ))}
           </tbody>

@@ -48,8 +48,8 @@ export async function signup(formData: FormData) {
     try {
       await prisma.user.create({
         data: {
-          first_name: data.first_name,
-          last_name: data.last_name,
+          firstName: data.first_name,
+          lastName: data.last_name,
           id: user.id,
           email: user.email!,
         },

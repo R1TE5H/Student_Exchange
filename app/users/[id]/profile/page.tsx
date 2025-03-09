@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "@/app/services/interfaces";
+import { User } from "@/prisma/interfaces";
 
 interface Props {
   params: { id: string };

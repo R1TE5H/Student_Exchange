@@ -8,44 +8,37 @@ const NavBar = async () => {
 
   const { data } = await supabase.auth.getUser();
 
-  const links = [
-    {
-      url: "/login",
-      label: "Login",
-    },
-    {
-      url: "/products",
-      label: "Products",
-    },
-    {
-      url: "/register",
-      label: "Register",
-    },
-  ];
-
   return (
     <nav className="flex justify-around text-xl text-white">
       <div className="invisible" />
       <div className="p-5 flex justify-between bg-red-300">
-        {links.map((link, index) => (
-          <Link key={index} className="button" href={link.url}>
-            {link.label}
-          </Link>
-        ))}
-        {data.user && (
-          <Link className="button" href={`/users/${data.user.id}`}>
-            Users Page
-          </Link>
+        {!data.user && (
+          <>
+            <Link className="button" href={`/login`}>
+              Login
+            </Link>
+            <Link className="button" href={`/register`}>
+              Register
+            </Link>
+          </>
         )}
+        <Link className="button" href={`/products`}>
+          Products
+        </Link>
         {data.user && (
-          <form>
-            <button
-              className="text-xl bg-purple-600 text-white p-4 rounded-md"
-              formAction={logOut}
-            >
-              Log Out
-            </button>
-          </form>
+          <>
+            <Link className="button" href={`/users/${data.user.id}`}>
+              Users Page
+            </Link>
+            <form>
+              <button
+                className="text-xl bg-purple-600 text-white p-4 rounded-md"
+                formAction={logOut}
+              >
+                Log Out
+              </button>
+            </form>
+          </>
         )}
       </div>
       <div className="invisible" />

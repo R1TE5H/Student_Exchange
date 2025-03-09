@@ -1,7 +1,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import { User } from "@/app/services/interfaces";
+import { User } from "@/prisma/interfaces";
 import Link from "next/link";
 
 interface Props {
@@ -35,15 +35,25 @@ const UserPage = async ({ params }: Props) => {
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Products</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th>{user.id}</th>
             <td>
-              {user.first_name} {user.last_name}
+              {user.firstName} {user.lastName}
             </td>
             <td>{user.email}</td>
+            <td>
+              {user.products.length > 0 ? (
+                user.products.map((product) => (
+                  <p key={product.id}>{product.name}</p>
+                ))
+              ) : (
+                <p>None</p>
+              )}
+            </td>
           </tr>
         </tbody>
       </table>

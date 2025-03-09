@@ -1,4 +1,4 @@
-import { Product } from "@/app/services/interfaces";
+import { Product } from "@/prisma/interfaces";
 import React from "react";
 
 interface Props {
@@ -16,10 +16,14 @@ const IndividualProductPage = async ({ params }: Props) => {
 
   return (
     <>
-      <div>Product Number {id} Page</div>
+      <div>{product.name}</div>
+      <div>{product.id}</div>
+      <div>{product.description}</div>
+      <div>{product.price}</div>
       <div>
-        {product.name}, {product.id}
+        {product.creator.firstName} {product.creator.lastName}
       </div>
+      <div>{product.creator.email}</div>
     </>
   );
 };

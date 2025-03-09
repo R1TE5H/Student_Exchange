@@ -43,10 +43,13 @@ const Form = ({ id }: Props) => {
 
     const response = await fetch(`/api/users/${id}/create-product`, {
       method: "POST",
+      headers: {
+        "user-id": id,
+      },
       body: JSON.stringify({
         name: data.name,
         price: data.price,
-        userID: id,
+        description: data.description,
       }),
     });
     console.log(await response.json());
@@ -83,6 +86,20 @@ const Form = ({ id }: Props) => {
           />
           {errors.name && (
             <span className="text-red-500 text-sm">{errors.name}</span>
+          )}
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="description">Description:</label>
+
+          <input
+            type="text"
+            id="description"
+            name="description"
+            placeholder="Enter a Description"
+            onChange={handleChange}
+          />
+          {errors.name && (
+            <span className="text-red-500 text-sm">{errors.description}</span>
           )}
         </div>
         <button className="button" type="submit" disabled={loading}>
