@@ -9,30 +9,37 @@ const NavBar = async () => {
   const { data } = await supabase.auth.getUser();
 
   return (
-    <nav className="flex justify-around text-xl text-white">
-      <div className="invisible" />
-      <div className="p-5 flex justify-between gap-5 bg-red-300">
+    <nav className="flex justify-between items-center px-10 py-4 bg-purple-300 shadow-md">
+      {/* Light purple navbar background */}
+
+      {/* Website Name "DUCKPOP" in the top right corner */}
+      <div className="text-4xl font-extrabold text-gray-900 tracking-widest uppercase">
+        DUCKPOP
+      </div>
+
+      {/* Black box containing navigation links */}
+      <div className="p-5 flex justify-between gap-8 bg-black text-white rounded-lg shadow-lg">
         {!data.user && (
           <>
-            <Link className="button" href={`/login`}>
+            <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/login`}>
               Login
             </Link>
-            <Link className="button" href={`/register`}>
+            <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/register`}>
               Register
             </Link>
           </>
         )}
-        <Link className="button" href={`/products`}>
+        <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/products`}>
           Products
         </Link>
         {data.user && (
           <>
-            <Link className="button" href={`/users/${data.user.id}`}>
+            <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/users/${data.user.id}`}>
               Users Page
             </Link>
             <form>
               <button
-                className="text-xl bg-purple-600 text-white p-4 rounded-md"
+                className="text-xl bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-md"
                 formAction={logOut}
               >
                 Log Out
@@ -41,7 +48,6 @@ const NavBar = async () => {
           </>
         )}
       </div>
-      <div className="invisible" />
     </nav>
   );
 };
