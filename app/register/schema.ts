@@ -20,7 +20,12 @@ const schema = z
       .min(2, { message: "Last name must be at least 2 characters" })
       .max(50, { message: "Last name must be less than 50 characters" }),
 
-    email: z.string().email(),
+    email: z
+      .string()
+      .email("Invalid email address")
+      .refine((email) => email.endsWith(".edu"), {
+        message: "Email must end with .edu",
+      }),
 
     password: passwordSchema,
 

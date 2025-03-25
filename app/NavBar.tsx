@@ -2,6 +2,8 @@ import Link from "next/link";
 import React from "react";
 import { logOut } from "./logout/actions";
 import { createClient } from "@/utils/supabase/server";
+import LogoutBtn from "./components/LogoutBtn";
+import NavLink from "./components/NavLink";
 
 const NavBar = async () => {
   const supabase = await createClient();
@@ -9,54 +11,26 @@ const NavBar = async () => {
   const { data } = await supabase.auth.getUser();
 
   return (
-    <nav className="flex justify-between items-center px-10 py-4 bg-purple-300 shadow-md">
+    <nav className="relative flex justify-between items-center px-10 py-10 bg-white ">
       {/* Light purple navbar background */}
-
-      {/* Website Name "DUCKPOP" in the top right corner */}
-      <div className="text-4xl font-extrabold text-gray-900 tracking-widest uppercase">
+      <div className="text-4xl font-extrabold text-indigo-600 tracking-widest uppercase">
         DUCKPOP
       </div>
 
       {/* Black box containing navigation links */}
-      <div className="p-5 flex justify-between gap-8 bg-black text-white rounded-lg shadow-lg">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 flex j gap-8 bg-indigo-600 text-white rounded-lg shadow-lg">
         {!data.user && (
           <>
-            <Link
-              className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
-              href={`/login`}
-            >
-              Login
-            </Link>
-            <Link
-              className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
-              href={`/register`}
-            >
-              Register
-            </Link>
+            <NavLink href={`/login`} label="Login" />
+            <NavLink href={`/register`} label="Register" />
           </>
         )}
-        <Link
-          className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
-          href={`/products`}
-        >
-          Products
-        </Link>
+        <NavLink href={`/products`} label="products" />
+
         {data.user && (
           <>
-            <Link
-              className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
-              href={`/users/${data.user.id}`}
-            >
-              Users Page
-            </Link>
-            <form>
-              <button
-                className="text-xl bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-md"
-                formAction={logOut}
-              >
-                Log Out
-              </button>
-            </form>
+            <NavLink href={`/users/${data.user.id}`} label="Users Page" />
+            <LogoutBtn />
           </>
         )}
       </div>
