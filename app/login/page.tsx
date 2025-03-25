@@ -62,9 +62,12 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center h-screen bg-white">
       {/* White background added */}
-      <div className="bg-purple-700 text-white p-10 rounded-lg shadow-lg w-96">
+      <div
+        className="bg-purple-700 text-white p-10 rounded-lg shadow-lg"
+        style={{ width: "500px" }}
+      >
         {/* Purple square background with white text */}
-        <h2 className="text-2xl font-bold text-center mb-5">Login</h2>
+        <h2 className="text-3xl font-bold text-center mb-5">Login</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {fields.map((field) => (
@@ -84,7 +87,9 @@ export default function LoginPage() {
                 }`}
               />
               {errors[field.name] && (
-                <span className="text-red-500 text-sm">{errors[field.name]}</span>
+                <span className="text-red-500 text-sm">
+                  {errors[field.name]}
+                </span>
               )}
             </div>
           ))}
@@ -94,7 +99,7 @@ export default function LoginPage() {
           {/* Black square around the button */}
           <div className="bg-black p-1 rounded">
             <button
-              className="w-full bg-black text-white font-bold py-2 px-4 rounded hover:bg-gray-900"
+              className="w-full bg-black text-white font-bold py-3 px-6 rounded text-xl hover:bg-gray-900"
               type="submit"
               disabled={loading}
             >

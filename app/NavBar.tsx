@@ -21,20 +21,32 @@ const NavBar = async () => {
       <div className="p-5 flex justify-between gap-8 bg-black text-white rounded-lg shadow-lg">
         {!data.user && (
           <>
-            <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/login`}>
+            <Link
+              className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
+              href={`/login`}
+            >
               Login
             </Link>
-            <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/register`}>
+            <Link
+              className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
+              href={`/register`}
+            >
               Register
             </Link>
           </>
         )}
-        <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/products`}>
+        <Link
+          className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
+          href={`/products`}
+        >
           Products
         </Link>
         {data.user && (
           <>
-            <Link className="text-xl font-bold tracking-wide uppercase hover:text-purple-400" href={`/users/${data.user.id}`}>
+            <Link
+              className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
+              href={`/users/${data.user.id}`}
+            >
               Users Page
             </Link>
             <form>
