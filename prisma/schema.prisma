@@ -15,23 +15,58 @@ datasource db {
 }
 
 // Update Interfaces as Models change
-
 model User {
-  id        String    @id @unique
+  id        String   @id @unique
   firstName String
   lastName  String
-  email     String    @unique
-  createdAt DateTime  @default(now())
-  products  Product[]
+  email     String   @unique
+  createdAt DateTime @default(now())
   ratings   Float[]
+
+  products  Product[]       @relation("CreatedProducts")
+  watchList UserWatchList[]
+  cart      UserCart[]
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @unique @default(uuid())
   name        String
   price       Float
-  description String
-  creatorId   String 
-  creator     User     @relation(fields: [creatorId], references: [id])
+  description String   @db.Text
+  quantity    Int      @default(0)
   createdAt   DateTime @default(now())
+  creatorId   String
+
+  creator   User            @relation("CreatedProducts", fields: [creatorId], references: [id])
+  watchList UserWatchList[]
+  cart      UserCart[]
+  images    Image[]
+}
+
+model UserWatchList {
+  userId    String
+  productId String
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([userId, productId]) // Composite key to avoid duplicates
+}
+
+model UserCart {
+  userId    String
+  productId String
+  quantity  Int
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([userId, productId]) // Composite key to avoid duplicates
+}
+
+model Image {
+  id        String  @id @unique @default(uuid())
+  url       String // Public URL of the image in Supabase
+  productId String // Associated product ID
+  product   Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
 }

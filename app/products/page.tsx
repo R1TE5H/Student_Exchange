@@ -32,10 +32,7 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
           Name
         </Link>
       </div>
-      <p>
-        For Image upload using Cloudinary:
-        https://www.perplexity.ai/search/store-a-picture-in-supabase-po-WcOM9VZWSHGFniU5CGIWXw
-      </p>
+
       <div className="flex gap-5 m-5">
         {products &&
           products.map((product) => (

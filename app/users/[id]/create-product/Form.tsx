@@ -1,112 +1,43 @@
 "use client";
-import React, { useState } from "react";
+
+import React from "react";
 import schema from "./schema";
-import { processFormData } from "./actions";
+// import { processFormData } from "./actions"; Might be able to delete this when implementing the form
 
 interface Props {
   id: string;
 }
 
 const Form = ({ id }: Props) => {
-  const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const data = processFormData(
-      Object.fromEntries(new FormData(e.target as HTMLFormElement)),
-      ["price"]
-    );
-
-    const validate = schema.safeParse(data);
-
-    if (!validate.success) {
-      const newErrors: Record<string, string> = {};
-      validate.error.errors.forEach((e) => {
-        newErrors[e.path[0]] = e.message;
-      });
-      setErrors(newErrors);
-      setLoading(false);
-      console.log(errors);
-      return;
-    }
+    const data = {
+      name: "Product",
+      quantity: 1,
+      price: 1.7,
+      description: "This is a test for the API from the frontend",
+    };
 
     const response = await fetch(`/api/users/${id}/create-product`, {
       method: "POST",
       headers: {
         "user-id": id,
       },
-      body: JSON.stringify({
-        name: data.name,
-        price: data.price,
-        description: data.description,
-      }),
+      body: JSON.stringify(data),
     });
-    console.log(await response.json());
-    setLoading(false);
+
+    const result = await response.json();
+    console.log(result);
   };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col">
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            step="0.01"
-            min="0"
-            onChange={handleChange}
-            placeholder="Enter a price"
-          />
-          {errors.price && (
-            <span className="text-red-500 text-sm">{errors.price}</span>
-          )}
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="name">Name:</label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter a name"
-            onChange={handleChange}
-          />
-          {errors.name && (
-            <span className="text-red-500 text-sm">{errors.name}</span>
-          )}
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="description">Description:</label>
-
-          <input
-            type="text"
-            id="description"
-            name="description"
-            placeholder="Enter a Description"
-            onChange={handleChange}
-          />
-          {errors.name && (
-            <span className="text-red-500 text-sm">{errors.description}</span>
-          )}
-        </div>
-        <button className="button" type="submit" disabled={loading}>
-          {loading ? "Submitting" : "Submit"}
-        </button>
-      </form>
-    </div>
+    <>
+      <button
+        onClick={handleSubmit}
+        className="bg-indigo-600 p-5 text-xl text-white rounded-lg"
+      >
+        Submit Form
+      </button>
+    </>
   );
 };
 
