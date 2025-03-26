@@ -20,6 +20,7 @@ const IndividualProductPage = async ({ params }: Props) => {
       <div>{product.id}</div>
       <div>{product.description}</div>
       <div>{product.price}</div>
+      <div>{product.quantity}</div>
       <div>
         {product.creator.firstName} {product.creator.lastName}
       </div>

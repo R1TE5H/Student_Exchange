@@ -27,7 +27,7 @@ body {
 }
 
 @layer components {
-  .button {
+  /* .button {
     @apply bg-purple-600 text-white p-4 rounded-md text-xl hover:bg-purple-700 hover:scale-105 transform transition duration-300;
-  }
+  } */
 }

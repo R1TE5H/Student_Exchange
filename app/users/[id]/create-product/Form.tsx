@@ -84,16 +84,10 @@ const Form = ({ id }: Props) => {
             type="submit"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Login"}
+            {isSubmitting ? "Submitting..." : "Submit Product"}
           </button>
         </div>
       </form>
-      {/* <button
-        onClick={onSubmit}
-        className="bg-indigo-600 p-5 text-xl text-white rounded-lg"
-      >
-        Submit Form
-      </button> */}
     </>
   );
 };

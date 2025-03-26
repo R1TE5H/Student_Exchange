@@ -9,7 +9,7 @@ interface Props {
 const NavLink = ({ href, label }: Props) => {
   return (
     <Link
-      className="text-xl font-bold tracking-wide uppercase hover:text-purple-400"
+      className="text-xl p-5 font-bold bg-indigo-600 tracking-wide text-white uppercase rounded-lg hover:text-purple-400"
       href={href}
     >
       {label}

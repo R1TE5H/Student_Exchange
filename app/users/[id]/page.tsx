@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { User } from "@/prisma/interfaces";
 import Link from "next/link";
+import NavLink from "@/app/components/NavLink";
 
 interface Props {
   params: { id: string };
@@ -57,9 +58,10 @@ const UserPage = async ({ params }: Props) => {
           </tr>
         </tbody>
       </table>
-      <Link className="button" href={`/users/${id}/create-product`}>
-        Create Product Page
-      </Link>
+      <NavLink
+        href={`/users/${user!.id}/create-product`}
+        label="Create Product"
+      />
     </>
   );
 };

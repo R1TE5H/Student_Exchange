@@ -18,7 +18,7 @@ const NavBar = async () => {
       </div>
 
       {/* Black box containing navigation links */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 flex j gap-8 bg-indigo-600 text-white rounded-lg shadow-lg">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  flex j gap-8 bg-indigo-600 rounded-lg shadow-lg">
         {!data.user && (
           <>
             <NavLink href={`/login`} label="Login" />
@@ -29,7 +29,7 @@ const NavBar = async () => {
 
         {data.user && (
           <>
-            <NavLink href={`/users/${data.user.id}`} label="Users Page" />
+            <NavLink href={`/users/${data.user.id}`} label="Dashboard" />
             <LogoutBtn />
           </>
         )}
