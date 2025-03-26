@@ -6,7 +6,7 @@ export interface User {
   createdAt: Date;
   ratings: number[];
   products: Product[];
-  watchList: Product[];
+  watchList: WatchListItem[];
   cart: Product[];
 }
 
@@ -19,4 +19,18 @@ export interface Product {
   createdAt: Date;
   creatorId: string;
   creator: User;
+}
+
+export interface WatchListItem {
+  userId: string;
+  productId: string;
+  product: {
+    id: string;
+    name: string;
+    price: number;
+    description: string;
+    quantity: number;
+    createdAt: string;
+    creatorId: string;
+  };
 }

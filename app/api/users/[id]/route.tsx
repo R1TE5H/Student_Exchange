@@ -12,7 +12,15 @@ export async function GET(request: NextRequest, { params }: Props) {
   try {
     const users = await prisma.user.findUnique({
       where: { id: id },
-      include: { products: true },
+      include: {
+        products: true,
+        cart: true,
+        watchList: {
+          include: {
+            product: true,
+          },
+        },
+      },
     });
     return NextResponse.json(users, { status: 200 });
   } catch (error) {
