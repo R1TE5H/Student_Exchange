@@ -7,8 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import schema from "./schema";
 import InputField from "@/app/components/InputField";
 
-// import { processFormData } from "./actions"; Might be able to delete this when implementing the form
-
 interface Props {
   id: string;
 }

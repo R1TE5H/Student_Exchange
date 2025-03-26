@@ -40,7 +40,6 @@ model Product {
   creator   User            @relation("CreatedProducts", fields: [creatorId], references: [id])
   watchList UserWatchList[]
   cart      UserCart[]
-  images    Image[]
 }
 
 model UserWatchList {
@@ -60,13 +59,4 @@ model UserCart {
   product   Product @relation(fields: [productId], references: [id])
 
   @@id([userId, productId]) // Composite key to avoid duplicates
-}
-
-model Image {
-  id        String  @id @unique @default(uuid())
-  url       String // Public URL of the image in Supabase
-  productId String // Associated product ID
-  product   Product @relation(fields: [productId], references: [id])
-
-  createdAt DateTime @default(now())
 }
