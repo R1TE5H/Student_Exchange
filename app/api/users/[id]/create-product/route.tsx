@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
         price: body.price,
         description: body.description,
         creatorId: userID!,
-        quantity: 1,
+        quantity: body.quantity,
       },
     });
     if (!new_product)
