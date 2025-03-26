@@ -13,9 +13,12 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
   const resolvedSearchParams = await searchParams;
   const { sortOrder: filter } = resolvedSearchParams;
 
-  const data = await fetch(`${process.env.BASE_DOMAIN}/api/products`, {
-    method: "GET",
-  });
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/products`,
+    {
+      method: "GET",
+    }
+  );
   const products: Product[] = await data.json();
 
   const supabase = await createClient();
@@ -37,6 +40,12 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
       <div className="flex gap-5 mb-5">
         <NavLink href="/products" label="Clear Sort" />
         <NavLink href="/products?sortOrder=name" label="Name" />
+        {user && (
+          <NavLink
+            href={`/users/${user!.id}/create-product`}
+            label="Create Product"
+          />
+        )}
       </div>
       {products.length === 0 && (
         <div className="flex flex-col justify-center items-center">

@@ -2,7 +2,6 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { User } from "@/prisma/interfaces";
-import Link from "next/link";
 import NavLink from "@/app/components/NavLink";
 
 interface Props {
@@ -23,9 +22,12 @@ const UserPage = async ({ params }: Props) => {
     redirect(`/users/${data.user.id}`);
   }
 
-  const response = await fetch(`${process.env.BASE_DOMAIN}/api/users/${id}`, {
-    method: "GET",
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/users/${id}`,
+    {
+      method: "GET",
+    }
+  );
   const user: User = await response.json();
 
   return (
@@ -37,6 +39,7 @@ const UserPage = async ({ params }: Props) => {
             <th>Name</th>
             <th>Price</th>
             <th>Products</th>
+            <th>Watch List</th>
           </tr>
         </thead>
         <tbody>
@@ -50,6 +53,15 @@ const UserPage = async ({ params }: Props) => {
               {user.products.length > 0 ? (
                 user.products.map((product) => (
                   <p key={product.id}>{product.name}</p>
+                ))
+              ) : (
+                <p>None</p>
+              )}
+            </td>
+            <td>
+              {user.watchList.length > 0 ? (
+                user.watchList.map((item) => (
+                  <p key={item.product.id}>{item.product.name}</p>
                 ))
               ) : (
                 <p>None</p>
