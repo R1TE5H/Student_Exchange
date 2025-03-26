@@ -19,5 +19,4 @@ export interface Product {
   createdAt: Date;
   creatorId: string;
   creator: User;
-  images?: any;
 }
