@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/prisma/client";
 
+// Returns an array of Products
 export async function GET() {
   try {
     const products = await prisma.product.findMany({

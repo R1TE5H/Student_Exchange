@@ -29,13 +29,16 @@ const Form = ({ id }: Props) => {
   });
 
   const onSubmit = async (data: FormDataType) => {
-    const response = await fetch(`/api/users/${id}/create-product`, {
-      method: "POST",
-      headers: {
-        "user-id": id,
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/create-product`,
+      {
+        method: "POST",
+        headers: {
+          "user-id": id,
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const result = await response.json();
     if (result.createdAt) {

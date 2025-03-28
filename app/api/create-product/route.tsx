@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/client";
 import schema from "./schema";
 
+// Create a Product using data passed through the body
+// Validates the data using the zod schema, if successful, creates the product
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const userID = await request.headers.get("user-id");

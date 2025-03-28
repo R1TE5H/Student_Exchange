@@ -5,6 +5,7 @@ interface Props {
   params: { id: string };
 }
 
+// Returns the user from the given id parameter
 export async function GET(request: NextRequest, { params }: Props) {
   const resolvedParams = await params;
   const { id } = resolvedParams;

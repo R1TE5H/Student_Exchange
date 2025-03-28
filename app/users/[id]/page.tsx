@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { User } from "@/prisma/interfaces";
 import NavLink from "@/app/components/NavLink";
+import Link from "next/link";
 
 interface Props {
   params: { id: string };
@@ -38,7 +39,7 @@ const UserPage = async ({ params }: Props) => {
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Products</th>
+            <th>Listed Products</th>
             <th>Watch List</th>
           </tr>
         </thead>
@@ -52,7 +53,9 @@ const UserPage = async ({ params }: Props) => {
             <td>
               {user.products.length > 0 ? (
                 user.products.map((product) => (
-                  <p key={product.id}>{product.name}</p>
+                  <div key={product.id}>
+                    <Link href={`/products/${product.id}`}>{product.name}</Link>
+                  </div>
                 ))
               ) : (
                 <p>None</p>
@@ -61,7 +64,11 @@ const UserPage = async ({ params }: Props) => {
             <td>
               {user.watchList.length > 0 ? (
                 user.watchList.map((item) => (
-                  <p key={item.product.id}>{item.product.name}</p>
+                  <div key={item.product.id}>
+                    <Link href={`/products/${item.productId}`}>
+                      {item.product.name}
+                    </Link>
+                  </div>
                 ))
               ) : (
                 <p>None</p>

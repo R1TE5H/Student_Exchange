@@ -50,12 +50,7 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
       {products.length === 0 && (
         <div className="flex flex-col justify-center items-center">
           <p className="m-5 text-3xl font-bold">No Products Created</p>
-          {user ? (
-            <NavLink
-              href={`/users/${user!.id}/create-product`}
-              label="Create Product"
-            />
-          ) : (
+          {!user && (
             <NavLink href={`/login`} label="Login to Create Products" />
           )}
         </div>
