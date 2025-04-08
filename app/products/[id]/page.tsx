@@ -42,35 +42,46 @@ const IndividualProductPage = async ({ params }: Props) => {
   }
 
   return (
-    <>
-      <div>{product.name}</div>
-      <div>{product.id}</div>
-      <div>{product.description}</div>
-      <div>{product.price}</div>
-      <div>{product.quantity}</div>
-      <div>
-        {product.creator.firstName} {product.creator.lastName}
+    <div className="product-card p-6 max-w-md mx-auto bg-gray-800 text-white rounded-xl shadow-md space-y-4">
+      <figure>
+        <img
+          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+          alt={product.name}
+          className="w-full h-64 object-cover rounded-t-xl"
+        />
+      </figure>
+      <h1 className="text-3xl font-bold text-white">{product.name}</h1>
+      <p className="text-gray-200">Product ID: {product.id}</p>
+      <p className="text-lg text-white">{product.description}</p>
+      <p className="text-xl font-semibold text-white">Price: ${product.price}</p>
+      <p className="text-gray-200">Quantity: {product.quantity}</p>
+      <div className="mt-4">
+        <p className="text-white">Creator: {product.creator.firstName} {product.creator.lastName}</p>
+        <p className="text-gray-200">Email: {product.creator.email}</p>
       </div>
-      <div>{product.creator.email}</div>
       {user && (
-        <AddToWatchList productID={product.id.toString()} userID={user.id} />
+        <div className="mt-4">
+          <AddToWatchList productID={product.id.toString()} userID={user.id} />
+        </div>
       )}
       {product.creatorId == user?.id && (
-        <p className="font-bold">
-          The current user and product creator are the same. The current user
-          can edit the current product. Need to create a button and
-          functionality that enables the user to edit
-        </p>
+        <div className="mt-4 p-2 bg-blue-50 border border-blue-200 rounded">
+          <p className="font-bold">
+            You are the creator of this product. You can edit or manage it.
+          </p>
+        </div>
       )}
-      <p className="text-xl">
-        Watch List Items below. This api can be used to check if the current
-        product is in the watch list
-      </p>
-      {watchList &&
-        watchList.map((item) => (
-          <p key={item.productId}>{item.product.name}</p>
-        ))}
-    </>
+      <div className="mt-4 p-2 bg-gray-700 border border-gray-600 rounded">
+        <p className="text-xl font-medium text-white">Watch List Items</p>
+        {watchList ? (
+          watchList.map((item) => (
+            <p key={item.productId} className="text-gray-200">{item.product.name}</p>
+          ))
+        ) : (
+          <p className="text-gray-400">No items in watch list.</p>
+        )}
+      </div>
+    </div>
   );
 };
 

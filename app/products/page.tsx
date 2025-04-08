@@ -37,7 +37,7 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
 
   return (
     <>
-      <div className="flex gap-5 mb-5">
+      <div className="flex gap-5 mb-5 justify-center px-5">
         <NavLink href="/products" label="Clear Sort" />
         <NavLink href="/products?sortOrder=name" label="Name" />
         {user && (
@@ -55,10 +55,10 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
           )}
         </div>
       )}
-      <div className="flex gap-5 m-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-5 place-items-center">
         {(filteredProducts || products).map((product) => (
           <Link href={`/products/${product.id}`} key={product.id}>
-            <div className="card bg-base-100 w-96 shadow-md hover:scale-105 transform transition duration-300">
+            <div className="card bg-gray-800 text-white max-w-xs w-full shadow-md hover:scale-105 transform transition duration-300">
               <figure>
                 <img
                   src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
@@ -66,16 +66,16 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
                 />
               </figure>
               <div className="card-body">
-                <h2 className="card-title">
+                <h2 className="card-title text-white">
                   {product.name} | ${product.price}
-                  <div className="badge bg-blue-500">NEW</div>
+                  <div className="badge bg-blue-500 text-white">NEW</div>
                 </h2>
-                <p>
+                <p className="text-gray-300">
                   {product.description} -- Need to add the tags to each product
                 </p>
                 <div className="card-actions justify-end">
-                  <div className="badge badge-outline">Fashion</div>
-                  <div className="badge badge-outline">Products</div>
+                  <div className="badge badge-outline text-white border-white">Fashion</div>
+                  <div className="badge badge-outline text-white border-white">Products</div>
                 </div>
               </div>
             </div>

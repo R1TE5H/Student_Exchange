@@ -32,9 +32,9 @@ const UserPage = async ({ params }: Props) => {
   const user: User = await response.json();
 
   return (
-    <>
-      <table className="table">
-        <thead>
+    <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4">
+      <table className="table-auto w-full text-left bg-gray-700 rounded-md shadow-lg">
+        <thead className="bg-gray-900 text-white">
           <tr>
             <th>ID</th>
             <th>Name</th>
@@ -43,7 +43,7 @@ const UserPage = async ({ params }: Props) => {
             <th>Watch List</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-gray-800 text-gray-200">
           <tr>
             <th>{user.id}</th>
             <td>
@@ -77,11 +77,14 @@ const UserPage = async ({ params }: Props) => {
           </tr>
         </tbody>
       </table>
-      <NavLink
-        href={`/users/${user!.id}/create-product`}
-        label="Create Product"
-      />
-    </>
+      <div className="mt-4">
+        <NavLink
+          href={`/users/${user!.id}/create-product`}
+          label="Create Product"
+          className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition"
+        />
+      </div>
+    </div>
   );
 };
 
