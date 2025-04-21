@@ -1,4 +1,4 @@
-import { AddToWatchList } from "@/app/components/AddTo";
+import { WatchlistToggle } from "@/app/components/AddTo";
 import { Product, WatchListItem } from "@/prisma/interfaces";
 import { createClient } from "@/utils/supabase/server";
 import React from "react";
@@ -51,36 +51,39 @@ const IndividualProductPage = async ({ params }: Props) => {
         />
       </figure>
       <h1 className="text-3xl font-bold text-white">{product.name}</h1>
-      <p className="text-gray-200">Product ID: {product.id}</p>
       <p className="text-lg text-white">{product.description}</p>
-      <p className="text-xl font-semibold text-white">Price: ${product.price}</p>
+      <p className="text-xl font-semibold text-white">
+        Price: ${product.price}
+      </p>
       <p className="text-gray-200">Quantity: {product.quantity}</p>
       <div className="mt-4">
-        <p className="text-white">Creator: {product.creator.firstName} {product.creator.lastName}</p>
-        <p className="text-gray-200">Email: {product.creator.email}</p>
+        <p className="text-white">
+          Creator: {product.creator.firstName} {product.creator.lastName}
+        </p>
+        <p className="text-white">
+          Creator Rating: {product.creator.firstName} {product.creator.lastName}
+        </p>
       </div>
-      {user && (
-        <div className="mt-4">
-          <AddToWatchList productID={product.id.toString()} userID={user.id} />
-        </div>
+      {user ? (
+        <WatchlistToggle
+          userID={user!.id}
+          productID={product!.id.toString()}
+          initialStatus={
+            watchList?.some(
+              (item) => item.productId === product.id.toString()
+            ) as boolean
+          }
+        />
+      ) : (
+        <div>Login to add to a cart or watch list</div>
       )}
       {product.creatorId == user?.id && (
-        <div className="mt-4 p-2 bg-blue-50 border border-blue-200 rounded">
+        <div className="mt-4 p-2 rounded">
           <p className="font-bold">
             You are the creator of this product. You can edit or manage it.
           </p>
         </div>
       )}
-      <div className="mt-4 p-2 bg-gray-700 border border-gray-600 rounded">
-        <p className="text-xl font-medium text-white">Watch List Items</p>
-        {watchList ? (
-          watchList.map((item) => (
-            <p key={item.productId} className="text-gray-200">{item.product.name}</p>
-          ))
-        ) : (
-          <p className="text-gray-400">No items in watch list.</p>
-        )}
-      </div>
     </div>
   );
 };
