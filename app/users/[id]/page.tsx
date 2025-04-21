@@ -30,6 +30,7 @@ const UserPage = async ({ params }: Props) => {
     }
   );
   const user: User = await response.json();
+  console.log(user.cart[0]);
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4">
@@ -41,6 +42,7 @@ const UserPage = async ({ params }: Props) => {
             <th>Price</th>
             <th>Listed Products</th>
             <th>Watch List</th>
+            <th>Cart</th>
           </tr>
         </thead>
         <tbody className="bg-gray-800 text-gray-200">
@@ -65,6 +67,19 @@ const UserPage = async ({ params }: Props) => {
               {user.watchList.length > 0 ? (
                 user.watchList.map((item) => (
                   <div key={item.product.id}>
+                    <Link href={`/products/${item.productId}`}>
+                      {item.product.name}
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <p>None</p>
+              )}
+            </td>
+            <td className="items-start flex flex-col">
+              {user.cart.length > 0 ? (
+                user.cart.map((item) => (
+                  <div key={`${item.product.id}_cart`}>
                     <Link href={`/products/${item.productId}`}>
                       {item.product.name}
                     </Link>

@@ -15,7 +15,11 @@ export async function GET(request: NextRequest, { params }: Props) {
       where: { id: id },
       include: {
         products: true,
-        cart: true,
+        cart: {
+          include: {
+            product: true,
+          },
+        },
         watchList: {
           include: {
             product: true,
