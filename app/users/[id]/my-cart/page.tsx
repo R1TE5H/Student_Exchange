@@ -44,7 +44,14 @@ const MyCart = async ({ params }: Props) => {
           {cart.map((item) => (
             <tr key={item.productId}>
               <th>{item.product.name}</th>
-              <td>{item.product.price}</td>
+              <td>
+                {item.product.price.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </td>
               <td>{item.product.quantity}</td>
             </tr>
           ))}
