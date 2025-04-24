@@ -1,5 +1,6 @@
-import { WatchlistToggle } from "@/app/components/AddTo";
-import { Product, WatchListItem } from "@/prisma/interfaces";
+import { CartToggle } from "@/app/components/AddToCart";
+import { WatchlistToggle } from "@/app/components/AddToWatchList";
+import { CartItem, Product, WatchListItem } from "@/prisma/interfaces";
 import { createClient } from "@/utils/supabase/server";
 import React from "react";
 
@@ -27,6 +28,7 @@ const IndividualProductPage = async ({ params }: Props) => {
   } = await supabase.auth.getUser();
 
   let watchList: null | WatchListItem[] = null;
+  let cart: null | CartItem[] = null;
 
   if (user) {
     const response = await fetch(
@@ -39,6 +41,15 @@ const IndividualProductPage = async ({ params }: Props) => {
       }
     );
     watchList = await response.json();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/cart`, {
+      method: "GET",
+      headers: {
+        "user-id": user.id,
+      },
+    });
+
+    cart = await res.json();
   }
 
   return (
@@ -65,15 +76,26 @@ const IndividualProductPage = async ({ params }: Props) => {
         </p>
       </div>
       {user ? (
-        <WatchlistToggle
-          userID={user!.id}
-          productID={product!.id.toString()}
-          initialStatus={
-            watchList?.some(
-              (item) => item.productId === product.id.toString()
-            ) as boolean
-          }
-        />
+        <div>
+          <WatchlistToggle
+            userID={user!.id}
+            productID={product!.id.toString()}
+            initialStatus={
+              watchList?.some(
+                (item) => item.productId === product.id.toString()
+              ) as boolean
+            }
+          />
+          <CartToggle
+            userID={user!.id}
+            productID={product!.id.toString()}
+            initialStatus={
+              cart?.some(
+                (item) => item.productId === product.id.toString()
+              ) as boolean
+            }
+          />
+        </div>
       ) : (
         <div>Login to add to a cart or watch list</div>
       )}

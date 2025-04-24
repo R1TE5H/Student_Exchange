@@ -16,7 +16,6 @@ const NavBar = async () => {
       <div className="text-4xl font-extrabold text-indigo-600 tracking-widest uppercase">
         DUCKPOP
       </div>
-
       {/* Black box containing navigation links */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  flex j gap-8 bg-indigo-600 rounded-lg shadow-lg">
         {!data.user && (
@@ -34,6 +33,9 @@ const NavBar = async () => {
           </>
         )}
       </div>
+      {data.user && (
+        <NavLink href={`/users/${data.user.id}/my-cart`} label="Cart" />
+      )}
     </nav>
   );
 };
