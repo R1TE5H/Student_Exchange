@@ -29,6 +29,10 @@ const MyCart = async ({ params }: Props) => {
   });
 
   const cart: CartItem[] = await res.json();
+  const totalCost = cart.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4">
@@ -38,6 +42,7 @@ const MyCart = async ({ params }: Props) => {
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody className="bg-gray-800 text-gray-200">
@@ -53,8 +58,32 @@ const MyCart = async ({ params }: Props) => {
                 })}
               </td>
               <td>{item.product.quantity}</td>
+              <td>
+                {(item.product.quantity * item.product.price).toLocaleString(
+                  "en-US",
+                  {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }
+                )}
+              </td>
             </tr>
           ))}
+          <tr>
+            <th>Total</th>
+            <td />
+            <td />
+            <th>
+              {totalCost.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </th>
+          </tr>
         </tbody>
       </table>
     </div>

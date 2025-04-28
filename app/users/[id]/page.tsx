@@ -30,7 +30,6 @@ const UserPage = async ({ params }: Props) => {
     }
   );
   const user: User = await response.json();
-  console.log(user.cart[0]);
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4">
