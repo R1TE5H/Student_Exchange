@@ -48,3 +48,20 @@ export interface CartItem {
     creatorId: string;
   };
 }
+
+export interface Notification {
+  id: string;
+  buyerId: string;
+  creatorId: string;
+  productId: string;
+  quantity: number;
+  createdAt: Date;
+  buyer: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    createdAt: Date;
+  };
+  product: Product;
+}

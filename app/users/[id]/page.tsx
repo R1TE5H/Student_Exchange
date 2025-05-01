@@ -4,6 +4,8 @@ import { createClient } from "@/utils/supabase/server";
 import { User } from "@/prisma/interfaces";
 import NavLink from "@/app/components/NavLink";
 import Link from "next/link";
+import DashboardTable from "./DashboardTable";
+import NotificationTable from "./NotificationTable";
 
 interface Props {
   params: { id: string };
@@ -32,65 +34,11 @@ const UserPage = async ({ params }: Props) => {
   const user: User = await response.json();
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4">
-      <table className="table-auto w-full text-left bg-gray-700 rounded-md shadow-lg">
-        <thead className="bg-gray-900 text-white">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Listed Products</th>
-            <th>Watch List</th>
-            <th>Cart</th>
-          </tr>
-        </thead>
-        <tbody className="bg-gray-800 text-gray-200">
-          <tr>
-            <th>{user.id}</th>
-            <td>
-              {user.firstName} {user.lastName}
-            </td>
-            <td>{user.email}</td>
-            <td>
-              {user.products.length > 0 ? (
-                user.products.map((product) => (
-                  <div key={product.id}>
-                    <Link href={`/products/${product.id}`}>{product.name}</Link>
-                  </div>
-                ))
-              ) : (
-                <p>None</p>
-              )}
-            </td>
-            <td>
-              {user.watchList.length > 0 ? (
-                user.watchList.map((item) => (
-                  <div key={item.product.id}>
-                    <Link href={`/products/${item.productId}`}>
-                      {item.product.name}
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                <p>None</p>
-              )}
-            </td>
-            <td className="items-start flex flex-col">
-              {user.cart.length > 0 ? (
-                user.cart.map((item) => (
-                  <div key={`${item.product.id}_cart`}>
-                    <Link href={`/products/${item.productId}`}>
-                      {item.product.name}
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                <p>None</p>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4 flex flex-col gap-5">
+      <h1 className="font-bold text-3xl">Account Details</h1>
+      <DashboardTable user={user} />
+      <h1 className="font-bold text-3xl">Notifications</h1>
+      <NotificationTable userId={data.user.id} />
       <div className="mt-4">
         <NavLink
           href={`/users/${user!.id}/create-product`}

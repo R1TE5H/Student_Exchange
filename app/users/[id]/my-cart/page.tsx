@@ -94,7 +94,7 @@ const MyCart = async ({ params }: Props) => {
           </tr>
         </tbody>
       </table>
-      <CheckoutButton cart={cart} user={data.user.id} />
+      <CheckoutButton cart={cart} />
     </div>
   );
 };
