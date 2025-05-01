@@ -19,6 +19,7 @@ export interface Product {
   createdAt: Date;
   creatorId: string;
   creator: User;
+  tag: string;
 }
 
 export interface WatchListItem {
@@ -32,6 +33,7 @@ export interface WatchListItem {
     quantity: number;
     createdAt: string;
     creatorId: string;
+    tag: string;
   };
 }
 export interface CartItem {
@@ -46,6 +48,7 @@ export interface CartItem {
     quantity: number;
     createdAt: string;
     creatorId: string;
+    tag: string;
   };
 }
 

@@ -23,8 +23,12 @@ const CreateProductPage = async ({ params }: Props) => {
 
   return (
     <>
-      <p>List a New Product</p>
-      <Form id={id} />
+      <div className="max-w-3xl mx-auto p-6 space-y-4">
+        <p className="font-bold text-3xl">List a New Product</p>
+        <div className="max-w-3xl">
+          <Form id={id} />
+        </div>
+      </div>
     </>
   );
 };

@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
         description: body.description,
         creatorId: userID!,
         quantity: body.quantity,
+        tag: body.category,
       },
     });
     if (!new_product)

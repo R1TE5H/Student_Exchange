@@ -36,6 +36,8 @@ const schema = z.object({
   description: z
     .string()
     .min(10, { message: "Description must be longer than 10 characters" }),
+
+  category: z.string().min(1, "Category is required"),
 });
 
 export default schema;

@@ -39,7 +39,7 @@ model Product {
   quantity    Int      @default(0)
   createdAt   DateTime @default(now())
   creatorId   String
-  tags        String[]
+  tag         String  @default("")
 
   creator       User            @relation("CreatedProducts", fields: [creatorId], references: [id])
   watchList     UserWatchList[]

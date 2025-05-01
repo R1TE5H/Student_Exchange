@@ -27,19 +27,22 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const filteredProducts = filter
-    ? sort(products).asc(
-        filter == "name"
-          ? (product) => product.name
-          : (product) => product.createdAt
-      )
-    : null;
+  let filteredProducts;
+  if (filter == "name") {
+    sort(products).asc((product) => product.name);
+  } else if (["electronics", "books", "clothing"].includes(filter))
+    filteredProducts = products.filter(
+      (product) => product.tag.toLowerCase() == filter
+    );
 
   return (
     <>
       <div className="flex gap-5 mb-5 justify-center px-5">
         <NavLink href="/products" label="Clear Sort" />
         <NavLink href="/products?sortOrder=name" label="Name" />
+        <NavLink href="/products?sortOrder=books" label="Books" />
+        <NavLink href="/products?sortOrder=clothing" label="Clothing" />
+        <NavLink href="/products?sortOrder=electronics" label="Electronics" />
         {user && (
           <NavLink
             href={`/users/${user!.id}/create-product`}
@@ -70,12 +73,11 @@ const ProductsDashboardPage = async ({ searchParams }: Props) => {
                   {product.name} | ${product.price}
                   <div className="badge bg-blue-500 text-white">NEW</div>
                 </h2>
-                <p className="text-gray-300">
-                  {product.description} -- Need to add the tags to each product
-                </p>
+                <p className="text-gray-300">{product.description}</p>
                 <div className="card-actions justify-end">
-                  <div className="badge badge-outline text-white border-white">Fashion</div>
-                  <div className="badge badge-outline text-white border-white">Products</div>
+                  <div className="card-title badge text-white bg-indigo-600">
+                    {product.tag}
+                  </div>
                 </div>
               </div>
             </div>
