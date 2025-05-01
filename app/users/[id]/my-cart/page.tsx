@@ -2,6 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { User, CartItem } from "@/prisma/interfaces";
+import CheckoutButton from "./CheckoutButton";
 
 interface Props {
   params: { id: string };
@@ -34,12 +35,17 @@ const MyCart = async ({ params }: Props) => {
     0
   );
 
+  const handleSubmit = () => {
+    console.log("Hello World");
+  };
+
   return (
     <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4">
       <table className="table-auto w-full text-left bg-gray-700 rounded-md shadow-lg">
         <thead className="bg-gray-900 text-white">
           <tr>
             <th>Name</th>
+            <th>Creator</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
@@ -49,6 +55,7 @@ const MyCart = async ({ params }: Props) => {
           {cart.map((item) => (
             <tr key={item.productId}>
               <th>{item.product.name}</th>
+              <th>{item.product.creatorId}</th>
               <td>
                 {item.product.price.toLocaleString("en-US", {
                   style: "currency",
@@ -75,6 +82,7 @@ const MyCart = async ({ params }: Props) => {
             <th>Total</th>
             <td />
             <td />
+            <td />
             <th>
               {totalCost.toLocaleString("en-US", {
                 style: "currency",
@@ -86,6 +94,7 @@ const MyCart = async ({ params }: Props) => {
           </tr>
         </tbody>
       </table>
+      <CheckoutButton cart={cart} user={data.user.id} />
     </div>
   );
 };

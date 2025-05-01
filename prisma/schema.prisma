@@ -21,11 +21,14 @@ model User {
   lastName  String
   email     String   @unique
   createdAt DateTime @default(now())
-  ratings   Float[]
 
   products  Product[]       @relation("CreatedProducts")
   watchList UserWatchList[]
   cart      UserCart[]
+
+  // Required for Prisma schema validation (can be ignored in your app logic)
+  buyerNotifications   Notification[] @relation("BuyerNotifications")
+  creatorNotifications Notification[] @relation("CreatorNotifications")
 }
 
 model Product {
@@ -36,10 +39,12 @@ model Product {
   quantity    Int      @default(0)
   createdAt   DateTime @default(now())
   creatorId   String
+  tags        String[]
 
-  creator   User            @relation("CreatedProducts", fields: [creatorId], references: [id])
-  watchList UserWatchList[]
-  cart      UserCart[]
+  creator       User            @relation("CreatedProducts", fields: [creatorId], references: [id])
+  watchList     UserWatchList[]
+  cart          UserCart[]
+  notifications Notification[]
 }
 
 model UserWatchList {
@@ -59,4 +64,17 @@ model UserCart {
   product   Product @relation(fields: [productId], references: [id])
 
   @@id([userId, productId]) // Composite key to avoid duplicates
+}
+
+model Notification {
+  id        String   @id @unique @default(uuid())
+  buyerId   String
+  creatorId String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+
+  buyer   User    @relation("BuyerNotifications", fields: [buyerId], references: [id])
+  creator User    @relation("CreatorNotifications", fields: [creatorId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 }
