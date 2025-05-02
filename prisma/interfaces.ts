@@ -4,7 +4,6 @@ export interface User {
   lastName: string;
   email: string;
   createdAt: Date;
-  ratings: number[];
   products: Product[];
   watchList: WatchListItem[];
   cart: CartItem[];

@@ -19,7 +19,6 @@ export async function GET(request: NextRequest, { params }: Props) {
             firstName: true,
             lastName: true,
             email: true,
-            ratings: true,
           },
         },
       },

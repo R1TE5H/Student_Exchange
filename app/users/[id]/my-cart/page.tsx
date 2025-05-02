@@ -35,10 +35,6 @@ const MyCart = async ({ params }: Props) => {
     0
   );
 
-  const handleSubmit = () => {
-    console.log("Hello World");
-  };
-
   return (
     <div className="max-w-3xl mx-auto p-6 bg-gray-800 text-white rounded-xl shadow-md space-y-4">
       <table className="table-auto w-full text-left bg-gray-700 rounded-md shadow-lg">
@@ -64,17 +60,14 @@ const MyCart = async ({ params }: Props) => {
                   maximumFractionDigits: 2,
                 })}
               </td>
-              <td>{item.product.quantity}</td>
+              <td>{item.quantity}</td>
               <td>
-                {(item.product.quantity * item.product.price).toLocaleString(
-                  "en-US",
-                  {
-                    style: "currency",
-                    currency: "USD",
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  }
-                )}
+                {(item.quantity * item.product.price).toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </td>
             </tr>
           ))}
